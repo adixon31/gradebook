@@ -8,82 +8,58 @@ import java.util.ArrayList;
  */
 
 /**
- * Represents a Class Section and contains Students. Reports the average score
- * and letter grade for the section.
+ * The third composite of the component package. Represents a Class Section and
+ * contains Students. Reports the average score and letter grade for the
+ * section.
  */
 
-public class Section {
+public class Section extends Component {
     private ArrayList<Student> students;
-    private double averageScore;
-    private char averageLetterGrade = 'A';
-    private String name;
-    private GradingScheme gradingScheme;
-    private final double gradeA = 89.49, gradeB = 79.49, gradeC = 69.49,
-            gradeD = 59.49;
 
     public Section(String name) {
-        this.setName(name);
-        gradingScheme = new GradingScheme();
+        this.name = name;
         students = new ArrayList<Student>();
     }
 
-    public void addStudent(Student student) {
+    public void add(Student student) {
         if (student != null) {
             students.add(student);
         }
     }
 
-    public void setStudent(ArrayList<Student> students) {
+    public void setSections(ArrayList<Student> students) {
         this.students = students;
     }
 
-    public double getAverageScore() {
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public double getScore(GradingScheme gradingScheme) {
         double sumOfScores = 0;
         if (!students.isEmpty()) {
             for (Student s : students) {
                 sumOfScores += s.getScore(gradingScheme);
             }
-            averageScore = sumOfScores / students.size();
+            score = sumOfScores / students.size();
         }
-        return averageScore;
+        return score;
     }
 
-    public double getAverageScore(GradingScheme gradingscheme) {
+    public double getScore() {
         double sumOfScores = 0;
         if (!students.isEmpty()) {
             for (Student s : students) {
-                sumOfScores += s.getScore(gradingscheme);
+                sumOfScores += s.getScore();
             }
-            averageScore = sumOfScores / students.size();
+            score = sumOfScores / students.size();
         }
-        return averageScore;
+        return score;
     }
 
-    public char getAverageLetterGrade() {
-        if (averageScore > gradeA) {
-            averageLetterGrade = 'A';
-        } else if (averageScore > gradeB) {
-            averageLetterGrade = 'B';
-        } else if (averageScore > gradeC) {
-            averageLetterGrade = 'C';
-        } else if (averageScore > gradeD) {
-            averageLetterGrade = 'D';
-        } else {
-            averageLetterGrade = 'F';
-        }
-        return averageLetterGrade;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAverageScore(double averageScore) {
-        this.averageScore = averageScore;
+    public void print() {
+        System.out.println("Name: " + name + ", Average score: " + score
+                + ", Average Letter Grade: " + letterGrade);
     }
 
 }

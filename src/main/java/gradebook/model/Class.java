@@ -8,21 +8,20 @@ import java.util.ArrayList;
  */
 
 /**
- * Represents a Course Class with multiple Sections. Will report the average
- * score and letter grade of all class sections.
+ * Second composite of the package component. Represents a Course Class with
+ * multiple Sections. Will report the average score and letter grade of all
+ * class sections.
  */
-public class Class {
-    private ArrayList<Section> sections;
-    private double averageScore;
-    private char averageLetterGrade;
-    private final double gradeA = 89.49, gradeB = 79.49, gradeC = 69.49,
-            gradeD = 59.49;
 
-    public Class() {
+public class Class extends Component {
+    private ArrayList<Section> sections;
+
+    public Class(String name) {
+        this.name = name;
         sections = new ArrayList<Section>();
     }
 
-    public void addSection(Section section) {
+    public void add(Section section) {
         if (section != null) {
             sections.add(section);
         }
@@ -32,27 +31,34 @@ public class Class {
         this.sections = sections;
     }
 
-    public double getAverageScore() {
-        double sumOfScores = 0;
-        for (Section s : sections) {
-            sumOfScores += s.getAverageScore();
-        }
-        averageScore = sumOfScores / sections.size();
-        return averageScore;
+    public ArrayList<Section> getSections() {
+        return sections;
     }
 
-    public char getAverageLetterGrade() {
-        if (averageScore > gradeA) {
-            averageLetterGrade = 'A';
-        } else if (averageScore > gradeB) {
-            averageLetterGrade = 'B';
-        } else if (averageScore > gradeC) {
-            averageLetterGrade = 'C';
-        } else if (averageScore > gradeD) {
-            averageLetterGrade = 'D';
-        } else {
-            averageLetterGrade = 'F';
+    public double getScore(GradingScheme gradingScheme) {
+        double sumOfScores = 0;
+        if (!sections.isEmpty()) {
+            for (Section s : sections) {
+                sumOfScores += s.getScore(gradingScheme);
+            }
+            score = sumOfScores / sections.size();
         }
-        return averageLetterGrade;
+        return score;
+    }
+
+    public double getScore() {
+        double sumOfScores = 0;
+        if (!sections.isEmpty()) {
+            for (Section s : sections) {
+                sumOfScores += s.getScore();
+            }
+            score = sumOfScores / sections.size();
+        }
+        return score;
+    }
+
+    public void print() {
+        System.out.println("Name: " + name + ", Average score: " + score
+                + ", Average Letter Grade: " + letterGrade);
     }
 }
